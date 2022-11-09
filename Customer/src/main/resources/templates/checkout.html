@@ -30,7 +30,7 @@
 
 <!-- Start Cart  -->
 <div class="cart-box-main">
-    <div class="container">
+    <div class="container" th:if="${customer}">
         <div class="row">
             <div class="col-sm-6 col-lg-6 mb-3">
                 <div class="checkout-address">
@@ -38,15 +38,15 @@
                         <h3>Billing address</h3>
                     </div>
                     <div class="mb-3">
-                        <label for="username">Username *</label>
+                        <label for="username">Username: *</label>
                         <p th:text="${customer.username}" id="username">
                     </div>
                     <div class="mb-3">
-                        <label for="phone">Phone Number *</label>
+                        <label for="phone">Phone Number: *</label>
                         <p id="phone" th:text="${customer.phoneNumber}">
                     </div>
                     <div class="mb-3">
-                        <label for="address">Address *</label>
+                        <label for="address">Address: *</label>
                         <p th:text="${customer.address + ' ' + customer.city + ' ' + customer.country}" id="address">
                     </div>
                     <hr class="mb-4">
@@ -62,14 +62,14 @@
                     <hr class="mb-1">
                 </div>
             </div>
-            <div class="col-sm-6 col-lg-6 mb-3">
+            <div class="col-sm-6 col-lg-6 mb-3" th:each="item : ${cart.cartItem}">
                 <div class="col-md-12 col-lg-12">
                     <div class="odr-box">
                         <div class="title-left">
                             <h3>Shopping cart</h3>
                         </div>
                         <div class="rounded p-2 bg-light">
-                            <div class="media mb-2 border-bottom" th:each="item : ${cart.cartItem}">
+                            <div class="media mb-2 border-bottom" >
                                 <div class="media-body"><a href="product-detail.html"
                                                            th:text="${item.product.name}"> </a>
                                     <div class="small text-muted">Price: $[[${item.product.costPrice}]] <span
@@ -88,21 +88,21 @@
                         </div>
                         <div class="d-flex">
                             <div class="font-weight-bold">Product</div>
-                            <div class="ml-auto font-weight-bold">Total</div>
+                            <div class="ml-auto font-weight-bold"></div>
                         </div>
                         <hr class="my-1">
                         <div class="d-flex">
                             <h4>Sub Total</h4>
-                            <div class="ml-auto font-weight-bold" th:text="${ '$' + cart.totalPrices}"></div>
+                            <div class="ml-auto font-weight-bold" th:text="${cart.totalPrices} +' VND'"></div>
                         </div>
                         <div class="d-flex">
                             <h4>Discount</h4>
-                            <div class="ml-auto font-weight-bold"> $0</div>
+                            <div class="ml-auto font-weight-bold">0 VND</div>
                         </div>
                         <hr class="my-1">
                         <div class="d-flex">
                             <h4>Tax</h4>
-                            <div class="ml-auto font-weight-bold"> $2</div>
+                            <div class="ml-auto font-weight-bold">0 VND</div>
                         </div>
                         <div class="d-flex">
                             <h4>Shipping Cost</h4>
@@ -111,12 +111,12 @@
                         <hr>
                         <div class="d-flex gr-total">
                             <h5>Grand Total</h5>
-                            <div class="ml-auto h5" th:text=" '$' + ${cart.totalPrices + 2}"></div>
+                            <div class="ml-auto h5" th:text="${cart.totalPrices + 2}+ ' VND'"></div>
                         </div>
                         <hr>
                     </div>
                 </div>
-                <div class="col-12 d-flex shopping-box"><a th:href="@{/order}" class="ml-auto btn hvr-hover">Place Order</a></div>
+                <div class="col-12 d-flex shopping-box"><a th:href="@{'/order/'+ ${customer.id}}" class="ml-auto btn hvr-hover">Confirm Order</a></div>
             </div>
         </div>
     </div>

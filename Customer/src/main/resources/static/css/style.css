@@ -102,7 +102,7 @@
 
  .main-top{
      background: #6d6a6a;
-     padding: 10px 0px;
+     padding: 0px 0px;
 }
  .custom-select-box{
      float: left;
@@ -2037,7 +2037,7 @@ button[disabled] {
 }
 
  .table-main table thead{
-     background: #7a7a79;
+     background: #ffffff;
      color: #312a2a;
 }
  .table-main .table thead th{

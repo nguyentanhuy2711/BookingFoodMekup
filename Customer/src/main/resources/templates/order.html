@@ -3,8 +3,8 @@
 <!-- Basic -->
 
 <head th:replace="fragments::head">
-
-
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js" integrity="sha512-7VTiy9AhpazBeKQAlhaLRUk+kAMAb8oczljuyJHPsVPWox/QIXDFOnT9DUk1UC8EbnHKRdQowT7sOBe7LAjajQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 
 <body>
@@ -42,108 +42,52 @@
                                 <th>Delivery Date</th>
                                 <th class="price-pr">Order Status</th>
                                 <th class="quantity-box">Total Price</th>
-                                <th>Tax</th>
                                 <th class="total-pr">Payment Method</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td class="order-date">
-                                    <span><b>27-1-2022</b></span>
+                            <tr th:each="item:${listOrder}">
+                                <td class="order-date" >
+                                    <span><b th:text="${item.orderDate}"></b></span>
                                 </td>
                                 <td class="name-pr">
-                                    <a href="#">
-                                        29-1-2022
-                                    </a>
+                                    <span><b th:text="${item.deliveryDate}"></b></span>
                                 </td>
+<!--                                <td class="price-pr">-->
+<!--                                    <div th:switch="${item.statusOrder}">-->
+<!--                                        <p th:case="CHUA_DAT" th:text="Chưa Đặt">Chưa Đặt</p>-->
+<!--                                        <p th:case="DA_DAT">Đã Đặt</p>-->
+<!--                                        <p th:case="DANG_GIAO">Đang Giao</p>-->
+<!--                                        <p th:case="HOAN_THANH">Hoàn Thành </p>-->
+<!--                                        <p th:case="CANCLE">Đã Hủy </p>-->
+<!--                                    </div>-->
+<!--                                </td>-->
                                 <td class="price-pr">
-                                    <p>Completed</p>
+                                    <div th:switch="${item.statusOrder}">
+                                        <p th:case="CHUA_DAT" th:text="Chưa Đặt"></p>
+                                        <p th:case="DA_DAT" th:text="Đã Đặt"></p>
+                                        <p th:case="DANG_GIAO"  th:text="Đang Giao"></p>
+                                        <p th:case="HOAN_THANH" th:text="Hoàn Thành"> </p>
+                                        <p th:case="CANCLE" th:text="Đã Hủy"> </p>
+                                    </div>
                                 </td>
-                                <td class="quantity-box"> 1</td>
-                                <td class="total-pr">
-                                    <p style="color: red">$ 80.0</p>
+                                <td class = "total-pr">
+                                    <span> <b th:text="${item.totalPrice}"></b></span>
                                 </td>
-                                <td class="total-pr" style="color: black">
-                                    <span></span>Credit Cart</span>
+                                <td class = "total-pr">
+                                    <span ><b>Cash</b></span>
                                 </td>
                                 <td>
-                                    <button class="button-cancel">Cancel</button>
+<!--                                    <button class = "button-cancel"-->
+<!--                                            th:data-id="${item.orderId}" th:data-userID="${item.customerId}"&ndash;&gt;-->
+<!--                                            onclick="showCancelMessage(this.getAttribute(),this.getAttribute('data-userID'))"-->
+<!--                                    >Cancel</button>-->
+                                    <button type="button" class="btn btn-danger">Cancle</button>
                                 </td>
-                                </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="order-date">
-                                    <B>27-1-2022</B>
-                                </td>
-                                <td class="name-pr">
-                                    <a href="#">
-                                        30-1-2022
-                                    </a>
-                                </td>
-                                <td class="price-pr">
-                                    <p>Canceled</p>
-                                </td>
-                                <td class="quantity-box">4</td>
-                                <td class="total-pr">
-                                    <p style="color: red">$ 140.0</p>
-                                </td>
-                                <td class="total-pr">
-                                    <a href="#">
-                                        <span>Cash on Delivery</span>
-                                    <button class="button-cancel">Cancel</button>
-                                </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="order-date">
-                                    <span><b>27-1-2022</b></span>
-                                </td>
-                                <td class="name-pr">
-                                    <a href="#">
-                                        27-1-2022
-                                    </a>
-                                </td>
-                                <td class="price-pr">
-                                    <p>Completed</p>
-                                </td>
-                                <td class="quantity-box">6</td>
-                                <td class="total-pr">
-                                    <p style="color: red">$ 80.0</p>
-                                </td>
-                                <td class="total-pr">
-                                    <span style="color:black">Credit Cart</span>
-                                <td>
-                                    <button class="button-cancel">Cancel</button>
-                                </td>
-                                </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="order-date">
-                                    <B>27-1-2022</B>
-                                </td>
-                                <td class="name-pr">
-                                    <a href="#">
-                                        28-1-2022
-                                    </a>
-                                </td>
-                                <td class="price-pr">
-                                    <p>To Ship</p>
-                                </td>
-                                <td class="quantity-box">7</td>
-                                <td class="total-pr">
-                                    <p style="color: red">$ 60.0</p>
-                                </td>
-                                <td class="total-pr">
-                                    <a href="#">
-                                        <span>Cash on Delivery</span>
 
-                                    <button class="button-cancel">Cancel</button>
-                                </a>
-                                </td>
                             </tr>
+
                             </tbody>
                         </table>
                     </div>
@@ -157,6 +101,48 @@
 
 <!-- ALL JS FILES -->
 <div th:replace="fragments::script"></div>
+
+
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<!--<script>-->
+
+<!--    function showCancelMessage(id,userID) {-->
+<!--        swal({-->
+<!--            title: "Are you sure?",-->
+<!--            text: "You will not be able to recover this imaginary file!",-->
+<!--            type: "warning",-->
+<!--            showCancelButton: true,-->
+<!--            confirmButtonColor: "#DD6B55",-->
+<!--            confirmButtonText: "Yes, delete it!",-->
+<!--            cancelButtonText: "No, cancel plx!",-->
+<!--            closeOnConfirm: false,-->
+<!--            closeOnCancel: false-->
+<!--        }, function (isConfirm) {-->
+<!--            if (isConfirm) {-->
+<!--                swal("Deleted!", "Your imaginary file has been deleted.", "success");-->
+<!--                deleteNew(id,userID);-->
+<!--            } else {-->
+<!--                swal("Cancelled", "Your imaginary file is safe :)", "error");-->
+<!--            }-->
+<!--        });-->
+<!--    }-->
+<!--    function deleteNew(id,userID) {-->
+<!--        $.ajax({-->
+<!--            url: '/user/delete-invoice/'+id,-->
+<!--            type: 'DELETE',-->
+<!--            success: function (result) {-->
+<!--                setTimeout('location.reload()', 2345);-->
+<!--            },-->
+<!--            error: function (error) {-->
+<!--                // window.location.href = "/user/history-invoice";-->
+<!--                window.location.href = '/user/history-invoice/'+userID;-->
+<!--            }-->
+<!--        });-->
+<!--    }-->
+<!--</script>-->
+
+
 </body>
 
 </html>

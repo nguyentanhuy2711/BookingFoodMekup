@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class CartController {
@@ -36,10 +38,19 @@ public class CartController {
         ShoppingCart shoppingCart = customer.getShoppingCart();
         if(shoppingCart == null){
             model.addAttribute("check", "No item in your cart");
+            session.setAttribute("totalItems", 0);
+            model.addAttribute("subTotal", 0);
+        }else{
+            session.setAttribute("totalItems", shoppingCart.getTotalItems());
+            model.addAttribute("subTotal", shoppingCart.getTotalPrices());
+            model.addAttribute("shoppingCart", shoppingCart);
+            List<String> listString = new ArrayList<>();
+            listString.add("1");
+            listString.add("2");
+            model.addAttribute("lstTest", listString);
         }
-        session.setAttribute("totalItems", shoppingCart.getTotalItems());
-        model.addAttribute("subTotal", shoppingCart.getTotalPrices());
-        model.addAttribute("shoppingCart", shoppingCart);
+
+
         return "cart";
     }
 

@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Site Metas -->
-    <title>HuyMonday Food</title>
+    <title>FPT Food</title>
     <meta name="keywords" content="">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -25,44 +25,12 @@
     <link rel="stylesheet" th:href="@{/css/responsive.css}">
     <!-- Custom CSS -->
     <link rel="stylesheet" th:href="@{/css/custom.css}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+<!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />-->
 </head>
 <body>
 <!-- Start Main Top -->
 <div class="main-top" th:fragment="main-top">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                <div class="our-link">
-                    <ul>
-                        <li><a href="#"> Call US : +0796623362</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                <div class="login-box">
-                    <select id="" class="selectpicker show-tick form-control" data-placeholder="Sign In" onchange="location = this.value;">
-                        <option th:text="${session.username != null} ? ${session.username} : 'Authentication'"></option>
-                        <option th:if = "${session.username == null}" value="http://localhost:8020/shop/login">Sign In</option>
-                        <option th:if = "${session.username != null}" value="http://localhost:8020/shop/logout">Log out</option>
-                        <option value="http://localhost:8020/shop/register" >Sign Up</option>
-                    </select>
-                </div>
-                <div class="text-slid-box">
-                    <div id="offer-box" class="carouselTicker">
-                        <ul class="offer-box">
-                            <li>
-                                <i class="fab fa-opencart"></i> Off 5% for new members
-                            </li>
-                            <li>
-                                <i class="fab fa-opencart"></i> Freeship
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+
 </div>
 <!-- End Main Top -->
 
@@ -83,20 +51,13 @@
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="navbar-menu">
+                <a href="index.html"><img th:src="@{/images/logo.jpg}" style="width: 100px; height: 30px;" alt="Logo FPT Food"/></a>
                 <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
                     <li class="nav-item"><a class="nav-link"th:href="@{/}">Home</a></li>
-                    <li class="nav-item active"><a class="nav-link" th:href="@{/home}">Menu</a></li>
-
-                    <li class="dropdown">
-                        <a href="#" class="nav-link dropdown-toggle " data-toggle="dropdown" > Shop <i class="fas fa-sort-down"></i></a>
-                        <ul class="dropdown-menu" >
-                            <li><a th:href="@{/products}">Products</a></li>
-                            <li><a th:href="@{/cart}">Cart</a></li>
-                            <li><a th:href="@{/check-out}">Checkout</a></li>
-                            <li><a th:href="@{/account}">My Account</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item"><a class="nav-link" href="contact-us.html">Contact Us</a></li>
+                    <li class="nav-item active"><a class="nav-link" th:href="@{/menu}">Menu</a></li>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/check-out}">Checkout</a></li>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/contact-us}">Contact Us</a></li>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/account}">My Account</a></li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -104,7 +65,6 @@
             <!-- Start Atribute Navigation -->
             <div class="attr-nav">
                 <ul>
-                    <li class="search"><a href="#"><i class="fa fa-search"></i></a></li>
                     <li class="side-menu">
                         <a th:href="@{/cart}">
                             <i class="fa fa-shopping-bag"></i>
@@ -115,6 +75,15 @@
                 </ul>
             </div>
             <!-- End Atribute Navigation -->
+                <div class="login-box">
+                    <select id="" class="selectpicker show-tick form-control" data-placeholder="Sign In" onchange="location = this.value;">
+                        <option th:text="${session.username != null} ? ${session.username} : 'Authentication'"></option>
+                        <option th:if = "${session.username == null}" value="http://localhost:8020/shop/login">Sign In</option>
+                        <option th:if = "${session.username != null}" value="http://localhost:8020/shop/logout">Log out</option>
+                        <option value="http://localhost:8020/shop/register" >Sign Up</option>
+                    </select>
+                </div>
+
         </div>
         <!-- Start Side Menu -->
         <div class="side">
@@ -153,15 +122,15 @@
 <div class="product-item-filter row" th:fragment="nav-product">
     <div class="col-12 col-sm-8 text-center text-sm-left">
         <div class="toolbar-sorter-right">
-            <span>Sort by </span>
+            <span>Sắp xếp </span>
             <select id="basic" class="selectpicker show-tick form-control" data-placeholder="$ USD" onchange="location = this.value;">
-                <option data-display="Select">Nothing</option>
-                <option value="http://localhost:8020/shop/high-price">High Price → Low Price</option>
-                <option value="http://localhost:8020/shop/low-price">Low Price → High Price</option>
-                <option data-display="Select">Best Selling</option>
+                <option data-display="Select">Chưa chọn</option>
+                <option value="http://localhost:8020/shop/high-price">Gía cao → Gía thấp</option>
+                <option value="http://localhost:8020/shop/low-price">Gía thấp → Gía cao</option>
+                <option data-display="Select">Sản phẩm bán chạy</option>
             </select>
         </div>
-        <p>Showing all results</p>
+        <p>Hiển thị tất cả sản phẩm</p>
     </div>
     <div class="col-12 col-sm-4 text-center text-sm-right">
         <ul class="nav nav-tabs ml-auto">
@@ -206,46 +175,46 @@
 
 <!-- Start Feed  -->
 <div class="instagram-box" th:fragment="instagram-box">
-    <div class="main-instagram owl-carousel owl-theme">
-        <div class="item">
-            <div class="ins-inner-box">
-                <a href="index.html"><img th:src="@{/images/Fish 01 - Fish Tacos.jpg}" alt=""/></a>
+<!--    <div class="main-instagram owl-carousel owl-theme">-->
+<!--        <div class="item">-->
+<!--            <div class="ins-inner-box">-->
+<!--                <a href="index.html"><img th:src="@{/images/Fish 01 - Fish Tacos.jpg}" alt=""/></a>-->
 
-            </div>
-        </div>
-        <div class="item">
-            <div class="ins-inner-box">
-                <img th:src="@{/images/instagram-img-02.jpg}" alt=""/>
-            </div>
-        </div>
-        <div class="item">
-            <div class="ins-inner-box">
-                <a href="index.html"><img th:src="@{/images/Fish 04 - Red Pepper & Parmesan Tilapia.jpg}" alt=""/></a>
-            </div>
-        </div>
-        <div class="item">
-            <div class="ins-inner-box">
-                <a href="index.html"><img th:src="@{/images/Fish 05 - Almond-Topped Fish.jpg}" alt=""/></a>
-            </div>
-        </div>
-        <div class="item">
-            <div class="ins-inner-box">
-                <a href="index.html"><img th:src="@{/images/Shrimp 03 - Shrimp Tostadas with Avocado Salsa.jpg}" alt=""/></a>
-            </div>
-        </div>
-        <div class="item">
-            <div class="ins-inner-box">
-                <a href="index.html"><img th:src="@{/images/Shrimp 08 - Grilled Shrimp and Chorizo Appetizers.jpg}"
-                                          alt=""/></a>
-            </div>
-        </div>
-        <div class="item">
-            <div class="ins-inner-box">
-                <a href="index.html"><img th:src="@{/images/Octopus 06 - Red Wine–Braised Baby Octopus with Black Olives.jpg}"
-                                          alt=""/></a>
-            </div>
-        </div>
-    </div>
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="item">-->
+<!--            <div class="ins-inner-box">-->
+<!--                <img th:src="@{/images/instagram-img-02.jpg}" alt=""/>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="item">-->
+<!--            <div class="ins-inner-box">-->
+<!--                <a href="index.html"><img th:src="@{/images/Fish 04 - Red Pepper & Parmesan Tilapia.jpg}" alt=""/></a>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="item">-->
+<!--            <div class="ins-inner-box">-->
+<!--                <a href="index.html"><img th:src="@{/images/Fish 05 - Almond-Topped Fish.jpg}" alt=""/></a>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="item">-->
+<!--            <div class="ins-inner-box">-->
+<!--                <a href="index.html"><img th:src="@{/images/Shrimp 03 - Shrimp Tostadas with Avocado Salsa.jpg}" alt=""/></a>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="item">-->
+<!--            <div class="ins-inner-box">-->
+<!--                <a href="index.html"><img th:src="@{/images/Shrimp 08 - Grilled Shrimp and Chorizo Appetizers.jpg}"-->
+<!--                                          alt=""/></a>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="item">-->
+<!--            <div class="ins-inner-box">-->
+<!--                <a href="index.html"><img th:src="@{/images/Octopus 06 - Red Wine–Braised Baby Octopus with Black Olives.jpg}"-->
+<!--                                          alt=""/></a>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
 </div>
 
 <!-- End Feed  -->
@@ -258,9 +227,9 @@
             <div class="row">
                 <div class="col-lg-4 col-md-12 col-sm-12">
                     <div class="footer-top-box">
-                        <h3>Business Time</h3>
+                        <h3>Thời gian hoạt động</h3>
                         <ul class="list-time">
-                            <li>Monday - Sunday: 08.00am to 10.00pm</li>
+                            <li>Thứ Hai - Chủ Nhật: 8h sáng - 10h tối</li>
                         </ul>
                     </div>
                 </div>
@@ -268,16 +237,16 @@
                     <div class="footer-top-box">
                         <h3>Contact Us</h3>
                         <ul class="list-time">
-                            <li><i class="fas fa-phone-square"></i> Phone number: 0796623362</li>
+                            <li><i class="fas fa-phone-square"></i> SDT: 0796623362</li>
                             <li><i class="fas fa-envelope"></i> Email: nguyentanhuy2711@gmail.com</li>
-                            <li><i class="fas fa-map-marker-alt"></i> Address:  FPT Complex , Đ. Nam Kỳ Khởi Nghĩa, Khu đô thị FPT City, Ngũ Hành Sơn</li>
+                            <li><i class="fas fa-map-marker-alt"></i> Địa Chỉ:  FPT Complex , Đ. Nam Kỳ Khởi Nghĩa, Khu đô thị FPT City, Ngũ Hành Sơn</li>
                         </ul>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-12 col-sm-12">
                     <div class="footer-top-box">
-                        <h3>Social Media</h3>
-                        <p>Come with HuyMonday shop </p>
+                        <h3>Mạng Xã Hội</h3>
+                        <p>Liên hệ với FPT Food </p>
                         <ul>
                             <li><a href="#"><i class="fab fa-facebook" aria-hidden="true"></i></a></li>
                             <li><a href="#"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>

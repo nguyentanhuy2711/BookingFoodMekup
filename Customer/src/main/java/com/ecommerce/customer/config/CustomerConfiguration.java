@@ -43,7 +43,7 @@ public class CustomerConfiguration extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/*").permitAll()
                 .antMatchers("/customer/*").hasAuthority("CUSTOMER")
-                .antMatchers("/grab/*","/customer/*").hasAuthority("GRAB")
+                .antMatchers("/grab/*").hasAuthority("GRAB")
                 .and()
                 .formLogin()
                 .loginPage("/login")

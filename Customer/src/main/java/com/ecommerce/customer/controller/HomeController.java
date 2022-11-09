@@ -1,8 +1,10 @@
 package com.ecommerce.customer.controller;
 
+import com.ecommerce.library.dto.CategoryDto;
 import com.ecommerce.library.dto.ProductDto;
 import com.ecommerce.library.model.Category;
 import com.ecommerce.library.model.Customer;
+import com.ecommerce.library.model.Product;
 import com.ecommerce.library.model.ShoppingCart;
 import com.ecommerce.library.service.CategoryService;
 import com.ecommerce.library.service.CustomerService;
@@ -29,11 +31,30 @@ public class HomeController {
     @Autowired
     private CustomerService customerService;
 
+//    @RequestMapping(value = {"/index", "/"}, method = RequestMethod.GET)
+//    public String home(Model model, Principal principal, HttpSession session){
+//            if(principal != null){
+//            session.setAttribute("username", principal.getName());
+//            Customer customer = customerService.findByUsername(principal.getName());
+//            ShoppingCart cart = customer.getShoppingCart();
+//            if(cart==null){
+//                session.setAttribute("totalItems", 0);
+//            }else{
+//                session.setAttribute("totalItems", cart.getTotalItems());
+//            }
+//
+//        }else{
+//            session.removeAttribute("username");
+//        }
+//        return "home";
+//    }
+
     @RequestMapping(value = {"/index", "/"}, method = RequestMethod.GET)
-    public String home(Model model, Principal principal, HttpSession session){
+    public String home(Model model,Principal principal, HttpSession session){
             if(principal != null){
-            session.setAttribute("username", principal.getName());
+
             Customer customer = customerService.findByUsername(principal.getName());
+            session.setAttribute("name", customer.getLastName());
             ShoppingCart cart = customer.getShoppingCart();
             if(cart==null){
                 session.setAttribute("totalItems", 0);
@@ -44,15 +65,28 @@ public class HomeController {
         }else{
             session.removeAttribute("username");
         }
-        return "home";
+        List<CategoryDto> categoryDtoList = categoryService.getCategoryAndProduct();
+        List<Product> products = productService.getAllProducts();
+        List<Product> listViewProducts = productService.listViewProducts();
+        model.addAttribute("categories", categoryDtoList);
+        model.addAttribute("viewProducts", listViewProducts);
+        model.addAttribute("products", products);
+        System.out.println("------- listViewProducts" + listViewProducts);
+        System.out.println("------- categories" + categoryDtoList);
+        return "shop";
     }
 
-    @GetMapping("/home")
+    @GetMapping("/menu")
     public String index(Model model){
         List<Category> categories = categoryService.findAll();
         List<ProductDto> productDtos = productService.findAll();
         model.addAttribute("categories", categories);
         model.addAttribute("products", productDtos);
         return "index";
+    }
+
+    @GetMapping("/contact-us")
+    public String contactUs(Model model){
+        return "contact-us";
     }
 }
