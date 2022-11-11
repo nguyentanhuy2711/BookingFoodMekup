@@ -40,13 +40,12 @@ public class OrderController {
             }else{
                 model.addAttribute("customer", customer);
                 ShoppingCart cart = customer.getShoppingCart();
+//                model.addAttribute("shoppingCart", cart);
                 model.addAttribute("cart", cart);
             }
         }catch (Exception e){
-            System.out.println("-----Error Checkout"+ e.getMessage());
+            System.out.println("----- Error Checkout"+ e.getMessage());
         }
-
-
         return "checkout";
     }
 

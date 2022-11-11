@@ -41,6 +41,7 @@ public class Customer {
 
     @OneToOne(mappedBy = "customer")
     private ShoppingCart shoppingCart;
+
     @OneToMany(mappedBy = "customer")
     private List<Order> orders;
 

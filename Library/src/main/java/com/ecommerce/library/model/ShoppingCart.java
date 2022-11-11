@@ -18,10 +18,10 @@ public class ShoppingCart {
     private Long id;
     private int totalItems;
     private double totalPrices;
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id", referencedColumnName = "customer_id")
     private Customer customer;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cart")
-    private Set<CartItem> cartItem;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "shoppingCart")
+    private Set<CartItem> cartItems;
 }

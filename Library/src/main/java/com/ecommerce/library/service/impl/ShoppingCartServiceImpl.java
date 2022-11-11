@@ -1,5 +1,6 @@
 package com.ecommerce.library.service.impl;
 
+import com.ecommerce.library.dto.ShoppingCartDto;
 import com.ecommerce.library.model.CartItem;
 import com.ecommerce.library.model.Customer;
 import com.ecommerce.library.model.Product;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -28,7 +30,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         if (cart == null) {
             cart = new ShoppingCart();
         }
-        Set<CartItem> cartItems = cart.getCartItem();
+        Set<CartItem> cartItems = cart.getCartItems();
         CartItem cartItem = findCartItem(cartItems, product.getId());
         if (cartItems == null) {
             cartItems = new HashSet<>();
@@ -37,7 +39,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
                 cartItem.setProduct(product);
                 cartItem.setTotalPrice(quantity * product.getCostPrice());
                 cartItem.setQuantity(quantity);
-                cartItem.setCart(cart);
+                cartItem.setShoppingCart(cart);
                 cartItems.add(cartItem);
 
                 itemRepository.save(cartItem);
@@ -48,7 +50,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
                 cartItem.setProduct(product);
                 cartItem.setTotalPrice(quantity * product.getCostPrice());
                 cartItem.setQuantity(quantity);
-                cartItem.setCart(cart);
+                cartItem.setShoppingCart(cart);
                 cartItems.add(cartItem);
                 itemRepository.save(cartItem);
             } else {
@@ -57,10 +59,10 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
                 itemRepository.save(cartItem);
             }
         }
-        cart.setCartItem(cartItems);
+        cart.setCartItems(cartItems);
 
-        int totalItems = totalItems(cart.getCartItem());
-        double totalPrice = totalPrice(cart.getCartItem());
+        int totalItems = totalItems(cart.getCartItems());
+        double totalPrice = totalPrice(cart.getCartItems());
 
         cart.setTotalPrices(totalPrice);
         cart.setTotalItems(totalItems);
@@ -73,7 +75,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     public ShoppingCart updateItemInCart(Product product, int quantity, Customer customer) {
         ShoppingCart cart = customer.getShoppingCart();
 
-        Set<CartItem> cartItems = cart.getCartItem();
+        Set<CartItem> cartItems = cart.getCartItems();
 
         CartItem item = findCartItem(cartItems, product.getId());
 
@@ -95,7 +97,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     public ShoppingCart deleteItemFromCart(Product product, Customer customer) {
         ShoppingCart cart = customer.getShoppingCart();
 
-        Set<CartItem> cartItems = cart.getCartItem();
+        Set<CartItem> cartItems = cart.getCartItems();
 
         CartItem item = findCartItem(cartItems, product.getId());
 
@@ -106,7 +108,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         double totalPrice = totalPrice(cartItems);
         int totalItems = totalItems(cartItems);
 
-        cart.setCartItem(cartItems);
+        cart.setCartItems(cartItems);
         cart.setTotalItems(totalItems);
         cart.setTotalPrices(totalPrice);
 
@@ -144,4 +146,5 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
         return totalPrice;
     }
+
 }

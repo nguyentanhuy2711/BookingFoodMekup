@@ -37,10 +37,8 @@
 <!-- Start Cart  -->
 <div id="divtest">
     <script th:inline="javascript">
-        var listProduct = [[${lstTest}]];
+        var listProduct = [[${shoppingCart}]];
     </script>
-    <h1>{{msg}}</h1>
-    <span v-for="prd in listPrd">{{prd}}</span>
     <div class="cart-box-main">
         <div class="container">
             <div class="row">
@@ -52,50 +50,42 @@
                         <table class="table">
                             <thead>
                             <tr>
-                                <th>Images</th>
-                                <th>Product Name</th>
-                                <th>Price</th>
-                                <th>Quantity</th>
-                                <th>Total</th>
+                                <th>STT</th>
+                                <th>Ảnh</th>
+                                <th>Tên Sản Phẩm</th>
+                                <th>Giá</th>
+                                <th>Số Lượng</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr
+                                v-for="(product, index) in listPrd"
                             >
-                                <!--                            <td class="thumbnail-img">-->
-                                <!--                                <a href="#">-->
-                                <!--                                    <img class="img-fluid"-->
-                                <!--                                         th:src="*{'data:image/jpeg;base64,' + cartItem.product.image}" alt=""/>-->
-                                <!--                                </a>-->
-                                <!--                            </td>-->
 
-                                <td> 123 </td>
+                                <td>{{index+1}}</td>
+                                <td class="thumbnail-img">
+                                    Chưa convert
+                                </td>
 
-                                <!--                            <td class="name-pr">-->
-                                <!--                                <p th:text="${cartItem.product.name}"></p>-->
-                                <!--                            </td>-->
-                                <!--                            <td class="price-pr">-->
-                                <!--                                <p th:text="${cartItem.product.costPrice} + ' VND'"></p>-->
-                                <!--                            </td>-->
-                                <!--                            <form th:action="@{/update-cart}" method="post">-->
-                                <!--                                <input type="hidden" name="id" th:value="${cartItem.product.id}">-->
-                                <!--                                <td class="quantity-box"><input type="number" size="4" th:value="${cartItem.quantity}"-->
-                                <!--                                                                name="quantity" min="0" step="1"-->
-                                <!--                                                                class="c-input-text qty text"></td>-->
-                                <!--                                <td class="total-pr">-->
-                                <!--                                    <p th:text="${cartItem.totalPrice} + ' VND'"></p>-->
-                                <!--                                </td>-->
-                                <!--                                <td class="remove-pr">-->
-                                <!--                                    <button type="submit" name="action" value="update" title="Update"-->
-                                <!--                                            class="btn btn-primary">Update-->
-                                <!--                                    </button>-->
 
-                                <!--                                    <button type="submit" name="action" value="delete" title="Delete"-->
-                                <!--                                            class="btn btn-warning">Delete-->
-                                <!--                                    </button>-->
-                                <!--                                </td>-->
-                                <!--</form> -->
+                                <td class="name-pr">
+                                    <p> {{product.productName}}</p>
+                                </td>
+                                <td class="price-pr">
+                                    <p> {{product.quantity}}</p>
+                                </td >
+                                    <td class="name-pr">{{product.totalPrice}}</td>
+                                    <td class="remove-pr">
+                                        <button type="submit" name="action" value="update" title="Update"
+                                                class="btn btn-primary">Update
+                                        </button>
+
+                                        <button type="submit" name="action" value="delete" title="Delete"
+                                                class="btn btn-warning">Delete
+                                        </button>
+                                    </td>
+
                             </tr>
                             </tbody>
                         </table>

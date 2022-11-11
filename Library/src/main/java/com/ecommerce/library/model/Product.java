@@ -27,12 +27,12 @@ public class Product {
     @Lob
     @Column(columnDefinition = "MEDIUMBLOB")
     private String image;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "category_id", referencedColumnName = "category_id")
     private Category category;
     private boolean is_deleted;
     private boolean is_activated;
 
-    @ManyToMany(mappedBy = "products")
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "products")
     private Set<Store> stores;
 }

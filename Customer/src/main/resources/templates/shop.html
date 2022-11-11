@@ -5,19 +5,60 @@
 <head th:replace="fragments::head">
 
 
-
 </head>
 
-<body>
-<!-- Start Main Top -->
-<div th:replace="fragments::main-top">
-</div>
-<!-- End Main Top -->
-
+<body id="#app">
 
 <!-- Start Main Top -->
-<header th:replace="fragments::main-header">
-</header>
+<nav class="navbar navbar-expand-lg navbar-light bg-light navbar-default bootsnav">
+    <div class="container">
+        <!-- Start Header Navigation -->
+        <div class="navbar-header">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu"
+                    aria-controls="navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fa fa-bars"></i>
+            </button>
+            <!--<a class="navbar-brand" href="index.html"><img src="images/logo1.png" class="logo" width="180" height="150" alt=""></a> -->
+        </div>
+        <!-- End Header Navigation -->
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="navbar-menu">
+            <a href="index.html"><img th:src="@{/images/logo.jpg}" style="width: 100px; height: 30px;" alt="Logo FPT Food"/></a>
+            <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
+                <li class="nav-item active" ><a class="nav-link"th:href="@{/}">Home</a></li>
+                <li class="nav-item "><a class="nav-link" th:href="@{/menu}">Menu</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/check-out}">Checkout</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/contact-us}">Contact Us</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/account}">My Account</a></li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+
+        <!-- Start Atribute Navigation -->
+        <div class="attr-nav">
+            <ul>
+                <li class="side-menu">
+                    <a th:href="@{/cart}">
+                        <i class="fa fa-shopping-bag"></i>
+                        <span class="badge" th:text = "${session.totalItems == null} ? '0' : ${session.totalItems}"></span>
+                        <p>My Cart</p>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- End Atribute Navigation -->
+        <div class="login-box">
+            <select id="" class="selectpicker show-tick form-control" data-placeholder="Sign In" onchange="location = this.value;">
+                <option th:text="${session.username != null} ? ${session.username} : 'Authentication'"></option>
+                <option th:if = "${session.username == null}" value="http://localhost:8020/shop/login">Sign In</option>
+                <option th:if = "${session.username != null}" value="http://localhost:8020/shop/logout">Log out</option>
+                <option value="http://localhost:8020/shop/register" >Sign Up</option>
+            </select>
+        </div>
+    </div>
+</nav>
+<!-- End Navigation -->
 <!-- End Main Top -->
 
 <!-- Start Top Search -->
@@ -141,14 +182,6 @@
 <div th:replace="fragments::script"></div>
 
 
-<h1>VueJS</h1>
-<div id="test">
-    <span> {{objectA.message}}</span>
-</div>
-
-<div id="contents">
-
-</div>
 
 
 
@@ -157,11 +190,15 @@
 
 <script>
     var test = new Vue({
-        el:'#test',
+        el:'#app',
         data:{
-            objectA: {
-                message: "hello"
-            }
+
+        },
+        mounted(){
+
+        },
+        methods:{
+
         }
     });
 

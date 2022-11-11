@@ -71,8 +71,6 @@ public class HomeController {
         model.addAttribute("categories", categoryDtoList);
         model.addAttribute("viewProducts", listViewProducts);
         model.addAttribute("products", products);
-        System.out.println("------- listViewProducts" + listViewProducts);
-        System.out.println("------- categories" + categoryDtoList);
         return "shop";
     }
 

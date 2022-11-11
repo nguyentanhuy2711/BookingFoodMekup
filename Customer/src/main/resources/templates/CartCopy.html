@@ -2,6 +2,7 @@
 <html lang="en" xmlns:th="https://www.thymeleaf.org/">
 <!-- Basic -->
 
+
 <head th:replace="fragments::head">
 
     <!--[if lt IE 9]>
@@ -11,7 +12,7 @@
 
 </head>
 
-<body>
+<body id="test">
 <!-- Start Main Top -->
 <div th:replace="fragments::main-top">
 </div>
@@ -35,109 +36,101 @@
 <!-- End All Title Box -->
 
 <!-- Start Cart  -->
-<div id="test">
-<script th:inline="">
-    var listProduct = [[${shoppingCart.cartItem}]]
-</script>
-<div class="cart-box-main">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div th:if="${check}" class="text-center alert-warning">
-                    <p th:text="${check}"></p>
-                </div>
-                <div class="table-main table-responsive" th:if="${check == null}">
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <th>Images</th>
-                            <th>Product Name</th>
-                            <th>Price</th>
-                            <th>Quantity</th>
-                            <th>Total</th>
-                            <th>Action</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr v-for="(product, index) in listPrd"
-                        >
-<!--                            <td class="thumbnail-img">-->
-<!--                                <a href="#">-->
-<!--                                    <img class="img-fluid"-->
-<!--                                         th:src="*{'data:image/jpeg;base64,' + cartItem.product.image}" alt=""/>-->
-<!--                                </a>-->
-<!--                            </td>-->
+<div id="divtest">
+    <script th:inline="javascript">
+        var listProduct = [[${shoppingCart}]];
+    </script>
+    <div class="cart-box-main">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div th:if="${check}" class="text-center alert-warning">
+                        <p th:text="${check}"></p>
+                    </div>
+                    <div class="table-main table-responsive" th:if="${check == null}">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>Ảnh</th>
+                                <th>Tên Sản Phẩm</th>
+                                <th>Giá</th>
+                                <th>Số Lượng</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr
+                                    v-for="(product, index) in listPrd"
+                            >
 
-                            <span> 123 </span>
+                                <td>{{index+1}}</td>
+                                <td class="thumbnail-img">
+                                    Chưa convert
+                                </td>
 
-<!--                            <td class="name-pr">-->
-<!--                                <p th:text="${cartItem.product.name}"></p>-->
-<!--                            </td>-->
-<!--                            <td class="price-pr">-->
-<!--                                <p th:text="${cartItem.product.costPrice} + ' VND'"></p>-->
-<!--                            </td>-->
-<!--                            <form th:action="@{/update-cart}" method="post">-->
-<!--                                <input type="hidden" name="id" th:value="${cartItem.product.id}">-->
-<!--                                <td class="quantity-box"><input type="number" size="4" th:value="${cartItem.quantity}"-->
-<!--                                                                name="quantity" min="0" step="1"-->
-<!--                                                                class="c-input-text qty text"></td>-->
-<!--                                <td class="total-pr">-->
-<!--                                    <p th:text="${cartItem.totalPrice} + ' VND'"></p>-->
-<!--                                </td>-->
-<!--                                <td class="remove-pr">-->
-<!--                                    <button type="submit" name="action" value="update" title="Update"-->
-<!--                                            class="btn btn-primary">Update-->
-<!--                                    </button>-->
 
-<!--                                    <button type="submit" name="action" value="delete" title="Delete"-->
-<!--                                            class="btn btn-warning">Delete-->
-<!--                                    </button>-->
-<!--                                </td>-->
-                            <!--</form> -->
-                        </tr>
-                        </tbody>
-                    </table>
+                                <td class="name-pr">
+                                    <p> {{product.productName}}</p>
+                                </td>
+                                <td class="price-pr">
+                                    <p> {{product.quantity}}</p>
+                                </td >
+                                <td class="name-pr">{{product.totalPrice}}</td>
+                                <td class="remove-pr">
+                                    <button type="submit" name="action" value="update" title="Update"
+                                            class="btn btn-primary">Update
+                                    </button>
+
+                                    <button  title="Delete"
+                                            class="btn btn-warning" v-on:click="deleteCartItem(product)">Delete
+                                    </button>
+                                </td>
+
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
+
+            <div class="row my-5">
+                <div class="col-lg-8 col-sm-12"></div>
+                <div class="col-lg-4 col-sm-12">
+                    <div class="order-box">
+                        <h3>Chi tiết đặt hàng</h3>
+                        <div class="d-flex">
+                            <h4>Tiền hàng</h4>
+                            <div class="ml-auto font-weight-bold" th:text = "${subTotal} + '00 VND'"> </div>
+                        </div>
+                        <div class="d-flex">
+                            <h4> Giảm giá </h4>
+                            <div class="ml-auto font-weight-bold">0 VND</div>
+                        </div>
+                        <hr class="my-1">
+                        <div class="d-flex">
+                            <h4>Tax</h4>
+                            <div class="ml-auto font-weight-bold" th:text = "0 + ' VND'"></div>
+                        </div>
+                        <div class="d-flex">
+                            <h4>Phí vận chuyển</h4>
+                            <div class="ml-auto font-weight-bold"> Free</div>
+                        </div>
+                        <hr>
+                        <div class="d-flex gr-total">
+                            <h5>Tổng tiền đơn hàng</h5>
+                            <div class="ml-auto h5" th:text = "${subTotal + '00 VND'}"> </div>
+                        </div>
+                        <hr>
+                    </div>
+                </div>
+                <div class="col-12 d-flex shopping-box"><a th:href="@{/check-out}" class="ml-auto btn hvr-hover">Checkout</a>
+                </div>
+            </div>
+
         </div>
-
-        <div class="row my-5">
-            <div class="col-lg-8 col-sm-12"></div>
-            <div class="col-lg-4 col-sm-12">
-                <div class="order-box">
-                    <h3>Order summary</h3>
-                    <div class="d-flex">
-                        <h4>Sub Total</h4>
-                        <div class="ml-auto font-weight-bold" th:text = "${subTotal} + ' VND'"> </div>
-                    </div>
-                    <div class="d-flex">
-                        <h4>Discount</h4>
-                        <div class="ml-auto font-weight-bold">0 VND</div>
-                    </div>
-                    <hr class="my-1">
-                    <div class="d-flex">
-                        <h4>Tax</h4>
-                        <div class="ml-auto font-weight-bold" th:text = "${subTotal}/10 + ' VND'"></div>
-                    </div>
-                    <div class="d-flex">
-                        <h4>Shipping Cost</h4>
-                        <div class="ml-auto font-weight-bold"> Free</div>
-                    </div>
-                    <hr>
-                    <div class="d-flex gr-total">
-                        <h5>Grand Total</h5>
-                        <div class="ml-auto h5" th:text = "${subTotal+ subTotal/10 + ' VND'}"> </div>
-                    </div>
-                    <hr>
-                </div>
-            </div>
-            <div class="col-12 d-flex shopping-box"><a th:href="@{/check-out}" class="ml-auto btn hvr-hover">Checkout</a>
-            </div>
-        </div>
-
     </div>
-</div>
-<!-- End Cart -->
+    <!-- End Cart -->
 </div>
 <!-- Start Feed  -->
 <div th:replace="fragments::instagram-box">
@@ -162,52 +155,58 @@
 
 
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+<!--&lt;!&ndash; Axios &ndash;&gt;-->
+<!--<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>-->
+
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
-<script th:src="@{/vuejs/Cart.js}"></script>
-
+<!--<script src='/vuejs/cart1.js'></script>-->
 
 <script>
-    var test = new Vue({
-        el:'#test',
-        mounted(){
-            this.listPrd = listProduct
-        },
+
+    var cart = new Vue({
+        el: '#divtest',
         data:{
-            listPrd: [],
-        }
-    });
-
-</script>
-<script>
-    // Import helper mapGetters của Vuex để có thể sử dụng getters `getAllProducts` đã khai báo bên KHO chứa (store)
-    // Import helper mapActions của Vuex để có thể sử dụng actions `removeProduct` đã khai báo bên KHO chứa (store)
-    import { mapGetters, mapActions } from 'vuex'
-
-    export default {
-
-        computed: {
-            ...mapGetters(['getProductsInCart']),
-
-            // Hàm dùng để tính Tổng tiền
-            getTotalAmount () {
-                let totalAmount = 0
-                this.getProductsInCart.forEach(product => {
-                    totalAmount += product.price * product.totalBuyed
-                })
-                return totalAmount
-            }
+            listPrd: []
+        },
+        mounted(){
+            this.getCartItem();
         },
         methods: {
-            ...mapActions(['removeProduct']),
+            getCartItem: function (){
+                var _this = this;
+                 axios.get('/shop/list-cart')
+                    .then(function (response){
+                        if(response.status == "200"){
+                            _this.listPrd = response.data
+                        }else console.log("ERROR")
+                    })
 
-            // Hàm xóa Sản phẩm khỏi Giỏ hàng
-            remove (id) {
-                this.removeProduct(id)
+            },
+
+
+            deleteCartItem: async function (product) {
+                 var _this = this;
+                 console.log("------- Props product", product)
+                await axios.post("/shop/update-cart-way2",{
+                        params:{
+                            id: product.id,
+                            quantity: product.quantity
+                        }
+                    }).then(function (response){
+                        if(response.status==200){
+                            console.log("----------- delete", response.data);
+                            _this.listPrd = response.data;
+                        }
+                }).catch(e =>{
+                    console.log("========== ERROR DELETE =========",e.message )
+                })
             }
-        }
 
-    }
+        }
+    })
 </script>
+
 
 </body>
 

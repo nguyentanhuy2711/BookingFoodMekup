@@ -1,8 +1,12 @@
 package com.ecommerce.customer.controller;
 
+import com.ecommerce.library.dto.CartItemDto;
+import com.ecommerce.library.dto.ProductDto;
+import com.ecommerce.library.model.CartItem;
 import com.ecommerce.library.model.Customer;
 import com.ecommerce.library.model.Product;
 import com.ecommerce.library.model.ShoppingCart;
+import com.ecommerce.library.service.CartService;
 import com.ecommerce.library.service.CustomerService;
 import com.ecommerce.library.service.ProductService;
 import com.ecommerce.library.service.ShoppingCartService;
@@ -15,7 +19,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+
+
 
 @Controller
 public class CartController {
@@ -23,11 +30,13 @@ public class CartController {
     private CustomerService customerService;
 
     @Autowired
-    private ShoppingCartService cartService;
+    private ShoppingCartService shoppingCartService;
 
     @Autowired
     private ProductService productService;
 
+    @Autowired
+    private CartService cartService;
     @GetMapping("/cart")
     public String cart(Model model, Principal principal, HttpSession session){
         if(principal == null){
@@ -36,22 +45,24 @@ public class CartController {
         String username = principal.getName();
         Customer customer = customerService.findByUsername(username);
         ShoppingCart shoppingCart = customer.getShoppingCart();
+        System.out.println("------------- shoppingCartID ================ "+ shoppingCart.getId());
         if(shoppingCart == null){
             model.addAttribute("check", "No item in your cart");
             session.setAttribute("totalItems", 0);
             model.addAttribute("subTotal", 0);
         }else{
+            List<CartItemDto> cartItemDtos = cartService.getAllCartItem1(shoppingCart.getId());
+
             session.setAttribute("totalItems", shoppingCart.getTotalItems());
             model.addAttribute("subTotal", shoppingCart.getTotalPrices());
-            model.addAttribute("shoppingCart", shoppingCart);
+
+            model.addAttribute("shoppingCart", cartItemDtos);
             List<String> listString = new ArrayList<>();
-            listString.add("1");
-            listString.add("2");
-            model.addAttribute("lstTest", listString);
+//            listString.add("1");
+//            listString.add("2");
+//            model.addAttribute("lstTest", listString);
         }
-
-
-        return "cart";
+        return "CartCopy";
     }
 
 
@@ -69,7 +80,7 @@ public class CartController {
         String username = principal.getName();
         Customer customer = customerService.findByUsername(username);
 
-        ShoppingCart cart = cartService.addItemToCart(product, quantity, customer);
+        ShoppingCart cart = shoppingCartService.addItemToCart(product, quantity, customer);
         return "redirect:" + request.getHeader("Referer");
 
     }
@@ -88,7 +99,7 @@ public class CartController {
             String username = principal.getName();
             Customer customer = customerService.findByUsername(username);
             Product product = productService.getProductById(productId);
-            ShoppingCart cart = cartService.updateItemInCart(product, quantity, customer);
+            ShoppingCart cart = shoppingCartService.updateItemInCart(product, quantity, customer);
 
             model.addAttribute("shoppingCart", cart);
             return "redirect:/cart";
@@ -97,7 +108,7 @@ public class CartController {
     }
 
 
-    @RequestMapping(value = "/update-cart", method = RequestMethod.POST, params = "action=delete")
+        @RequestMapping(value = "/update-cart", method = RequestMethod.POST, params = "action=delete")
     public String deleteItemFromCart(@RequestParam("id") Long productId,
                                      Model model,
                                      Principal principal){
@@ -107,12 +118,13 @@ public class CartController {
             String username = principal.getName();
             Customer customer = customerService.findByUsername(username);
             Product product = productService.getProductById(productId);
-            ShoppingCart cart = cartService.deleteItemFromCart(product, customer);
+            ShoppingCart cart = shoppingCartService.deleteItemFromCart(product, customer);
             model.addAttribute("shoppingCart", cart);
             return "redirect:/cart";
         }
 
     }
+
 
 
 
